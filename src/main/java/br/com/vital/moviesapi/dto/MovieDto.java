@@ -2,6 +2,8 @@ package br.com.vital.moviesapi.dto;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.vital.moviesapi.domain.Movie;
@@ -42,30 +44,17 @@ public class MovieDto {
 	}
 
 	public Movie toDomain() {
-		final Movie movie = new Movie();
-		movie.setId(id);
-		movie.setAdult(adult);
-		movie.setOriginalLanguage(originalLanguage);
-		movie.setOriginaTitle(originaTitle);
-		movie.setPopularity(popularity);
-		movie.setPosterPath(posterPath);
-		movie.setTitle(title);
-		movie.setVoteCount(voteCount);
-
+		final ModelMapper modelMapper = new ModelMapper();
+		final Movie movie = modelMapper.map(this, Movie.class);
 		movie.setGenres(GenreType.convertToList(genres));
 
 		return movie;
 	}
 
 	public static MovieDto toRequest(final Movie movie) {
-		final MovieDto dto = new MovieDto();
-		dto.setTitle(movie.getTitle());
-		dto.setAdult(movie.isAdult());
-		dto.setOriginalLanguage(movie.getOriginalLanguage());
-		dto.setOriginaTitle(movie.getOriginaTitle());
-		dto.setPopularity(movie.getPopularity());
-		dto.setPosterPath(movie.getPosterPath());
-		dto.setVoteCount(movie.getVoteCount());
+		final ModelMapper modelMapper = new ModelMapper();
+		final MovieDto dto = modelMapper.map(movie, MovieDto.class);
+
 		dto.setGenres(movie.getGenres().stream().map(e -> e.getCode()).toArray(Integer[]::new));
 
 		return dto;

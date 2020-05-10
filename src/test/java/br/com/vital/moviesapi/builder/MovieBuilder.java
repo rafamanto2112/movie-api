@@ -1,4 +1,4 @@
-package br.com.vital.movieapi.builder;
+package br.com.vital.moviesapi.builder;
 
 import java.util.Arrays;
 

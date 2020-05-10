@@ -2,6 +2,8 @@ package br.com.vital.moviesapi.dto.request;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import br.com.vital.moviesapi.domain.Movie;
 import br.com.vital.moviesapi.type.GenreType;
 import lombok.Getter;
@@ -15,6 +17,8 @@ public class MovieRequest implements Serializable {
 	private boolean adult;
 	private String originalLanguage;
 	private String originaTitle;
+
+	@NotEmpty(message = "Please inform a title")
 	private String title;
 	private Integer[] genres;
 	private Integer popularity;

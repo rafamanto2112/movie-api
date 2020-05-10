@@ -1,4 +1,4 @@
-package br.com.vital.movieapi.domain;
+package br.com.vital.moviesapi.domain;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -15,9 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import br.com.vital.movieapi.builder.MovieBuilder;
-import br.com.vital.moviesapi.domain.Catalog;
-import br.com.vital.moviesapi.domain.Movie;
+import br.com.vital.moviesapi.builder.MovieBuilder;
 import br.com.vital.moviesapi.exceptions.BusinessException;
 import br.com.vital.moviesapi.exceptions.TechinicalException;
 import br.com.vital.moviesapi.repository.MovieRepository;

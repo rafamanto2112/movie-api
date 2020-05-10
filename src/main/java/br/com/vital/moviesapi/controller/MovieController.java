@@ -2,6 +2,7 @@ package br.com.vital.moviesapi.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,36 +24,39 @@ import br.com.vital.moviesapi.exceptions.BusinessException;
 import br.com.vital.moviesapi.service.MovieService;
 
 @RestController
-@RequestMapping("movie")
+@RequestMapping("movies")
 public class MovieController {
 
 	@Autowired
 	private MovieService movieService;
 
 	@ResponseBody
-	@PostMapping(value = "/insert", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void insert(@RequestBody final MovieRequest request) throws BusinessException {
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> insert(@RequestBody @Valid final MovieRequest request) throws BusinessException {
 		movieService.insert(request);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void update(final MovieRequest request) throws BusinessException {
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> update(@RequestBody @Valid final MovieRequest request) throws BusinessException {
 		movieService.update(request);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/delete/{id}")
-	public void delete(@PathParam("id") final Integer id) throws BusinessException {
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> delete(@PathParam("id") final Integer id) throws BusinessException {
 		movieService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@ResponseBody
-	@GetMapping(value = "/listAll")
+	@GetMapping
 	public ResponseEntity<List<MovieResponse>> find() {
 		return new ResponseEntity<>(movieService.listAll(), HttpStatus.OK);
 	}
 
 	@ResponseBody
-	@GetMapping(value = "/find/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<MovieResponse> find(@PathParam("id") final Integer id) {
 		return new ResponseEntity<>(movieService.find(id), HttpStatus.OK);
 	}

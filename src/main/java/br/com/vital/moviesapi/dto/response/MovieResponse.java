@@ -2,6 +2,8 @@ package br.com.vital.moviesapi.dto.response;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+
 import br.com.vital.moviesapi.domain.Movie;
 import br.com.vital.moviesapi.type.GenreType;
 import lombok.Getter;
@@ -21,15 +23,8 @@ public class MovieResponse {
 	private String posterPath;
 
 	public static MovieResponse toResponse(final Movie movie) {
-		final MovieResponse response = new MovieResponse();
-		response.setId(movie.getId());
-		response.setGenres(movie.getGenres());
-		response.setOriginalLanguage(movie.getOriginalLanguage());
-		response.setOriginaTitle(movie.getOriginaTitle());
-		response.setPopularity(movie.getPopularity());
-		response.setPosterPath(movie.getPosterPath());
-		response.setTitle(movie.getTitle());
-		response.setVoteCount(movie.getVoteCount());
+		final ModelMapper modelMapper = new ModelMapper();
+		final MovieResponse response = modelMapper.map(movie, MovieResponse.class);
 
 		return response;
 	}
